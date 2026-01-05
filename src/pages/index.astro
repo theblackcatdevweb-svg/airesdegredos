@@ -3,6 +3,7 @@ import Layout from "../layouts/Layout.astro";
 import Navbar from "../components/Navbar.astro";
 import Escaparate from "../components/Escaparate.astro";
 import Banner from "../components/Banner.astro";
+import Footer from "../components/Footer.astro"; // <--- AÑADE ESTA LÍNEA
 import { productos } from "../data/productos";
 
 const especialidades = productos.filter(p => p.destacado).slice(0, 5);
@@ -70,7 +71,7 @@ const despensaBasicos = productos.filter(p => p.categoria === 'alimentacion').sl
     />
   </div>
 
-</Layout>
+<Footer /> </Layout>
 
 <style>
   /* Estilos necesarios para que el carrusel se vea bien */

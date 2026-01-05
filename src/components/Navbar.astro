@@ -1,6 +1,6 @@
 ---
 // src/components/Navbar.astro
-import { SignedIn, SignedOut, UserButton } from '@clerk/astro/components';
+import { SignedIn, SignedOut, UserButton, SignInButton } from '@clerk/astro/components';
 ---
 
 <header class="bg-white border-b border-stone-100 shadow-sm">
@@ -12,7 +12,6 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/astro/components';
           src="/images/productos/ui/logo_aires_gredos.jpg" 
           alt="Aires de Gredos" 
           class="h-20 md:h-28 w-auto object-contain" 
-          onerror="this.src='/favicon.svg'"
         />
       </a>
     </div>
@@ -21,23 +20,24 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/astro/components';
       
       <div class="flex items-center">
         <SignedOut>
-          <a href="https://accounts.airesdegredos.com/sign-in" class="bg-stone-800 text-white text-[11px] md:text-xs font-bold uppercase tracking-widest px-5 py-2.5 rounded-full hover:bg-stone-700 transition-all shadow-sm no-underline inline-block">
+          <SignInButton 
+            mode="modal" 
+            class="bg-stone-800 text-white text-[11px] font-bold uppercase tracking-widest px-5 py-2.5 rounded-full shadow-sm cursor-pointer border-none hover:bg-stone-700 transition-all"
+          >
             Entrar
-          </a>
+          </SignInButton>
         </SignedOut>
         <SignedIn>
           <UserButton afterSignOutUrl="/" />
         </SignedIn>
       </div>
 
-      <a href="/carrito" class="relative p-2.5 bg-[#5c4033] text-white rounded-full hover:scale-105 transition-transform shadow-md">
+      <a href="/carrito" class="relative p-2.5 bg-[#5c4033] text-white rounded-full shadow-md transition-transform hover:scale-105">
         <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle>
           <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
         </svg>
-        <span id="cart-count" class="absolute -top-1 -right-1 bg-amber-600 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white">
-          0
-        </span>
+        <span id="cart-count" class="absolute -top-1 -right-1 bg-amber-600 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white">0</span>
       </a>
     </div>
   </div>
@@ -54,40 +54,23 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/astro/components';
 </header>
 
 <style is:global>
-  /* 1. ELIMINAR EL BOTÓN FANTASMA: Oculta el div fixed que Clerk inyecta arriba a la derecha */
+  /* Mantenemos este CSS para ocultar el botón gris fijo que vimos en tu captura.
+     Esto asegura que el ÚNICO botón visible sea el que está dentro del Navbar.
+  */
   div.fixed.top-4.right-4.z-\[100\],
-  [data-clerk-unstyled-id] {
+  button[data-clerk-unstyled-id]:not(.bg-stone-800) {
     display: none !important;
-    visibility: hidden !important;
-    pointer-events: none !important;
   }
 
-  /* 2. MEJORAR NITIDEZ DEL LOGO */
-  img {
-    image-rendering: -webkit-optimize-contrast;
-  }
-
-  /* 3. OCULTAR BARRA DE SCROLL EN CATEGORÍAS */
-  .no-scrollbar::-webkit-scrollbar { 
-    display: none; 
-  }
-  .no-scrollbar { 
-    -ms-overflow-style: none; 
-    scrollbar-width: none; 
-  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 </style>
 
 <script>
   import { cartItems } from '../store/cartStore';
   const counter = document.getElementById('cart-count');
-  
   cartItems.subscribe(items => {
     const total = items.reduce((acc, item) => acc + (item.cantidad || 0), 0);
-    if (counter) {
-      counter.innerText = total.toString();
-      // Animación sutil de escala al añadir productos
-      counter.style.transform = 'scale(1.2)';
-      setTimeout(() => { counter.style.transform = 'scale(1)'; }, 150);
-    }
+    if (counter) counter.innerText = total.toString();
   });
 </script>
