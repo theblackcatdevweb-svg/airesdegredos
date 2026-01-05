@@ -1,0 +1,113 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Escaparate from "../components/Escaparate.astro";
+import Banner from "../components/Banner.astro";
+import { productos } from "../data/productos";
+
+const especialidades = productos.filter(p => p.destacado).slice(0, 5);
+const bodegaSeleccion = productos.filter(p => p.categoria === 'vinoteca').slice(0, 5);
+const despensaBasicos = productos.filter(p => p.categoria === 'alimentacion').slice(0, 5);
+---
+
+<Layout title="Aires de Gredos - Inicio">
+  <Navbar />
+
+  <div class="swiper w-full h-[300px] md:h-[500px]">
+    <div class="swiper-wrapper">
+      <div class="swiper-slide relative">
+        <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?q=80&w=2072&auto=format&fit=crop" class="w-full h-full object-cover" alt="Pan artesano">
+        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+          <h2 class="text-white text-4xl md:text-6xl font-serif font-bold">Aires de Gredos</h2>
+        </div>
+      </div>
+      <div class="swiper-slide relative">
+        <img src="https://images.unsplash.com/photo-1510812431401-41d2bd2722f3?q=80&w=2070&auto=format&fit=crop" class="w-full h-full object-cover" alt="Vinos">
+        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+          <h2 class="text-white text-4xl md:text-6xl font-serif font-bold">Calidad de la Sierra</h2>
+        </div>
+      </div>
+    </div>
+    <div class="swiper-pagination"></div>
+    <div class="swiper-button-next text-white"></div>
+    <div class="swiper-button-prev text-white"></div>
+  </div>
+
+  <main class="max-w-[1400px] mx-auto px-6 py-12">
+    
+    <Escaparate 
+      titulo="Nuestras Especialidades" 
+      subtitulo="Seleccionamos los mejores productos artesanos para tu día a día."
+      productos={especialidades}
+    />
+
+  </main>
+
+  <Banner 
+  titulo="¡El Pan de Verdad!" 
+  subtitulo="Masa madre, horno de leña y el aroma de la Sierra de Gredos en cada hogaza."
+  enlace="/categoria/panaderia"
+  textoEnlace="Ver nuestra panadería"
+  imagen="/images/fondo-pan-artesano.png" 
+/>
+
+  <div class="bg-[#3D2B1F] py-16 text-center text-[#FDFCF0]">
+     <p class="uppercase tracking-widest text-sm mb-2">Tradición en cada bocado</p>
+     <h3 class="text-3xl font-serif">De nuestra huerta a tu mesa en menos de 24 horas</h3>
+  </div>
+
+  <div class="max-w-[1400px] mx-auto px-6 py-12 space-y-20">
+    <Escaparate 
+      titulo="Selección de Bodega" 
+      subtitulo="Vinos con alma y licores de pequeños productores nacionales."
+      productos={bodegaSeleccion}
+    />
+
+    <Escaparate 
+      titulo="Básicos de Calidad" 
+      subtitulo="Aceites, conservas y legumbres que no pueden faltar en tu despensa."
+      productos={despensaBasicos}
+    />
+  </div>
+
+</Layout>
+
+<style>
+  /* Estilos necesarios para que el carrusel se vea bien */
+  .swiper-button-next, .swiper-button-prev {
+    color: white !important;
+  }
+  .swiper-pagination-bullet-active {
+    background: white !important;
+  }
+</style>
+<script is:inline>
+  function initSwiper() {
+    if (typeof Swiper !== 'undefined') {
+      new Swiper('.swiper', {
+        loop: true,
+        // Velocidad de la transición (1200ms = 1.2 segundos de deslizamiento suave)
+        speed: 1200, 
+        autoplay: {
+          // Tiempo de espera entre diapositivas (6000ms = 6 segundos)
+          delay: 6000,
+          disableOnInteraction: false,
+        },
+        // Efecto de transición (opcional: puedes usar 'slide' o 'fade')
+        effect: 'slide', 
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+      });
+    } else {
+      setTimeout(initSwiper, 100);
+    }
+  }
+
+  initSwiper();
+</script>

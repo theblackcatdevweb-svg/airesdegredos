@@ -1,0 +1,63 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="¡Gracias por tu compra! | Aires de Gredos">
+  <Navbar />
+
+  <main class="min-h-[80vh] flex items-center justify-center px-6 py-20">
+    <div class="max-w-2xl w-full text-center">
+      <div class="mb-8 inline-flex items-center justify-center w-24 h-24 bg-green-100 text-green-600 rounded-full shadow-inner">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+        </svg>
+      </div>
+
+      <h1 class="text-5xl font-serif font-bold text-[#3D2B1F] mb-4">¡Pedido Recibido!</h1>
+      <p class="text-xl text-stone-600 mb-8 font-serif italic">
+        Gracias por confiar en los tesoros de nuestra sierra. Hemos enviado los detalles a tu correo electrónico.
+      </p>
+
+      <div class="bg-[#FDFCF0] border border-stone-200 rounded-3xl p-8 mb-10 text-left">
+        <h3 class="font-bold text-[#3D2B1F] mb-4 uppercase tracking-widest text-sm">Próximos pasos:</h3>
+        <ul class="space-y-4">
+          <li class="flex gap-3">
+            <span class="text-[#8B5E3C] font-bold">1.</span>
+            <span class="text-stone-600">Estamos preparando tus productos con el mimo que merecen.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="text-[#8B5E3C] font-bold">2.</span>
+            <span class="text-stone-600">En cuanto el transportista recoja el paquete, te llamaremos o escribiremos.</span>
+          </li>
+          <li class="flex gap-3">
+            <span class="text-[#8B5E3C] font-bold">3.</span>
+            <span class="text-stone-600">Recibirás tu pedido en un plazo de 24/48h laborales.</span>
+          </li>
+        </ul>
+      </div>
+
+      <a 
+        href="/" 
+        class="inline-block bg-[#3D2B1F] text-white px-10 py-4 rounded-2xl font-bold text-lg hover:bg-black transition-all shadow-xl hover:-translate-y-1"
+      >
+        Volver a la tienda
+      </a>
+      
+      <p class="mt-8 text-stone-400 text-sm">
+        ¿Tienes alguna duda? Escríbenos a <span class="text-[#8B5E3C]">contacto@airesdegredos.com</span>
+      </p>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>
+
+<script>
+  // IMPORTANTE: Al llegar aquí, el pago ha sido un éxito, así que vaciamos el carrito
+  import { cartItems } from '../store/cartStore';
+  
+  // Vaciamos el store (y por tanto el localStorage gracias a la persistencia)
+  cartItems.set([]);
+</script>

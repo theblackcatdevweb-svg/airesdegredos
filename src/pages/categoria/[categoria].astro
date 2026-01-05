@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Escaparate from "../../components/Escaparate.astro";
+import { productos } from "../../data/productos";
+
+export function getStaticPaths() {
+  return [
+    { params: { categoria: 'panaderia' }, props: { titulo: 'Panadería Artesana' } },
+    { params: { categoria: 'bolleria' }, props: { titulo: 'Bollería del Día' } },
+    { params: { categoria: 'charcuteria' }, props: { titulo: 'Embutidos y Quesos' } },
+    { params: { categoria: 'vinoteca' }, props: { titulo: 'Bodega de Gredos' } },
+    { params: { categoria: 'alimentacion' }, props: { titulo: 'Despensa Gourmet' } },
+  ];
+}
+
+const { categoria } = Astro.params;
+const { titulo } = Astro.props;
+
+// Filtramos los productos que pertenecen a esta categoría
+const productosFiltrados = productos.filter(p => p.categoria === categoria);
+---
+
+<Layout title={`${titulo} | Aires de Gredos`}>
+  <Navbar />
+  
+  <header class="bg-[#3D2B1F] py-20 text-center text-[#FDFCF0] mb-12">
+    <h1 class="text-5xl font-serif font-bold mb-4">{titulo}</h1>
+    <p class="text-xl italic opacity-90">Los mejores productos de nuestra tierra, directos a tu casa.</p>
+  </header>
+
+  <main class="max-w-[1400px] mx-auto px-6 pb-24">
+    <Escaparate 
+      titulo="Nuestros Productos" 
+      subtitulo={`Explora nuestra selección de ${categoria}`}
+      productos={productosFiltrados}
+    />
+  </main>
+</Layout>

@@ -1,0 +1,64 @@
+---
+// Si quieres puedes importar el store aquí si necesitas lógica de servidor, 
+// pero para el contador lo haremos en el cliente.
+---
+
+<nav class="bg-[#FDFCF0] border-b border-stone-200 sticky top-0 z-50 py-2"> 
+  <div class="max-w-[1400px] mx-auto px-8"> 
+    <div class="flex justify-between items-center h-28"> 
+      
+      <a href="/" class="flex items-center gap-5 group">
+        <div class="relative">
+           <img 
+            src="/images/productos/ui/logo_aires_gredos.jpg" 
+            alt="Logo Aires de Gredos" 
+            class="h-20 w-auto rounded-xl shadow-md transition-transform group-hover:scale-105"
+          />
+        </div>
+        
+        <div class="hidden xl:flex flex-col">
+          <span class="text-3xl font-serif font-bold text-[#3D2B1F] tracking-tight leading-none">
+            Aires de Gredos
+          </span>
+          <span class="text-sm uppercase tracking-[0.4em] text-[#8B5E3C] mt-2 font-medium">
+            Sabores de la Sierra
+          </span>
+        </div>
+      </a>
+      
+      <div class="hidden lg:flex items-center space-x-12 text-lg font-semibold text-stone-800">
+        <a href="/categoria/panaderia" class="hover:text-[#8B5E3C] transition-all hover:-translate-y-0.5">Panadería</a>
+        <a href="/categoria/bolleria" class="hover:text-[#8B5E3C] transition-all hover:-translate-y-0.5">Bollería</a>
+        <a href="/categoria/charcuteria" class="hover:text-[#8B5E3C] transition-all hover:-translate-y-0.5">Charcutería</a>
+        <a href="/categoria/vinoteca" class="hover:text-[#8B5E3C] transition-all hover:-translate-y-0.5">Vinoteca</a>
+        <a href="/categoria/alimentacion" class="hover:text-[#8B5E3C] transition-all hover:-translate-y-0.5">Alimentación</a>
+      </div>
+
+      <div class="flex items-center gap-6">
+        <a href="/carrito" id="checkout-btn" class="bg-[#3D2B1F] text-white px-7 py-4 rounded-full text-base font-bold flex items-center gap-3 hover:bg-[#5D3A24] transition-all shadow-lg active:scale-95">
+          <span class="text-xl">🛒</span>
+          <span id="cart-count" class="bg-[#8B5E3C] px-2 rounded-md min-w-[1.5rem] text-center">0</span>
+        </a>
+      </div>
+
+    </div>
+  </div>
+</nav>
+
+<script>
+  import { cartItems } from '../store/cartStore';
+
+  const counter = document.getElementById('cart-count');
+
+  // Nos suscribimos a los cambios del store
+  cartItems.subscribe(items => {
+    const total = items.reduce((acc, item) => acc + item.cantidad, 0);
+    if (counter) {
+      counter.innerText = total.toString();
+      
+      // Opcional: animar el contador cuando cambie
+      counter.classList.add('scale-110');
+      setTimeout(() => counter.classList.remove('scale-110'), 100);
+    }
+  });
+</script>

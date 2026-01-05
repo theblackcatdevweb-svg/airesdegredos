@@ -1,0 +1,87 @@
+---
+import { productos } from "../data/productos";
+const destacados = productos.filter(p => p.destacado);
+---
+
+<div class="w-full overflow-hidden bg-[#FDFCF0] py-10">
+  <div class="swiper product-swiper !px-10">
+    <div class="swiper-wrapper">
+      {destacados.map(p => (
+        <div class="swiper-slide !h-auto">
+          <div class="bg-white rounded-2xl p-4 shadow-sm border border-stone-200 h-full flex flex-col">
+            <img src={p.imagen} alt={p.nombre} class="w-full h-40 object-cover rounded-xl mb-4" />
+            <h3 class="text-[#3D2B1F] font-bold text-sm mb-1 line-clamp-1">{p.nombre}</h3>
+            <p class="text-[#8B5E3C] font-bold mb-4">{p.precio}€</p>
+            <button 
+              class="add-to-cart mt-auto w-full bg-[#3D2B1F] text-white py-2 rounded-lg text-xs font-bold hover:bg-[#8B5E3C] transition-colors"
+              data-price={p.priceId}
+              data-nombre={p.nombre}
+              data-precio={p.precio}
+            >
+              Añadir
+            </button>
+          </div>
+        </div>
+      ))}
+    </div>
+    <div class="swiper-pagination !-bottom-1"></div>
+  </div>
+</div>
+
+<script>
+  import Swiper from 'swiper';
+  import { Autoplay, Pagination } from 'swiper/modules';
+
+  // Función para inicializar
+  function initSwiper() {
+ new Swiper('.product-swiper', {
+  modules: [Autoplay, Pagination],
+  slidesPerView: 1,
+  spaceBetween: 20,
+  loop: true,
+
+  // 1. Velocidad de la transición de deslizamiento
+  // 1500ms hace que el movimiento sea pausado y elegante
+  speed: 1500, 
+
+  autoplay: {
+    delay: 3500, // Se queda quieto 3.5 segundos
+    disableOnInteraction: false,
+  },
+
+  // 2. Curva de movimiento (Easing)
+  // 'ease-out' hace que empiece normal y frene suavemente al llegar al final
+  transition: 'ease-out', 
+
+  // 3. Toque extra: que el deslizamiento sea un poco más libre al arrastrar con el dedo
+  grabCursor: true, 
+
+  pagination: {
+    el: '.swiper-pagination',
+    clickable: true,
+  },
+  
+  breakpoints: {
+    640: { slidesPerView: 2 },
+    1024: { slidesPerView: 5 },
+  },
+});
+  }
+
+  // Se ejecuta al cargar y si navegas entre páginas (Astro View Transitions)
+  initSwiper();
+  document.addEventListener('astro:after-swap', initSwiper);
+</script>
+
+<style>
+  /* Forzamos que el contenedor de Swiper sea flexible */
+  .swiper {
+    width: 100%;
+    height: 100%;
+  }
+  /* Estilos para que las tarjetas no se amontonen */
+  .swiper-slide {
+    display: flex;
+    justify-content: center;
+  }
+</style>

@@ -1,0 +1,119 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Tu Cesta | Aires de Gredos">
+  <Navbar />
+
+  <main class="bg-[#FDFCF0]/50 min-h-[80vh] py-16">
+    <div class="max-w-[1200px] mx-auto px-6">
+      
+      <div class="flex items-center gap-4 mb-12">
+        <h1 class="text-4xl font-serif font-bold text-[#3D2B1F]">Tu Cesta de la Sierra</h1>
+        <span class="bg-[#8B5E3C] text-white px-3 py-1 rounded-full text-sm font-bold" id="items-count-badge">0</span>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+        
+        <div id="cart-list" class="lg:col-span-2 space-y-4">
+          </div>
+
+        <aside class="lg:col-span-1">
+          <div class="bg-white p-8 rounded-3xl shadow-sm border border-stone-200 sticky top-32">
+            <h3 class="text-xl font-bold text-[#3D2B1F] mb-6 border-b pb-4">Resumen del pedido</h3>
+            
+            <div class="space-y-4 mb-8 text-stone-600">
+              <div class="flex justify-between">
+                <span>Subtotal</span>
+                <span id="subtotal-price">0.00€</span>
+              </div>
+              <div class="flex justify-between text-green-700 font-medium">
+                <span>Gastos de envío</span>
+                <span>Gratis</span>
+              </div>
+            </div>
+
+            <div class="flex justify-between text-2xl font-bold text-[#3D2B1F] mb-8 pt-4 border-t border-stone-100">
+              <span>Total</span>
+              <span id="total-price" class="text-[#8B5E3C]">0.00€</span>
+            </div>
+            
+            <button 
+              id="btn-pagar"
+              class="w-full bg-[#3D2B1F] text-white py-5 rounded-2xl font-bold text-lg hover:bg-black transition-all shadow-xl hover:-translate-y-1 active:scale-95 flex justify-center items-center gap-2"
+            >
+              <span>Finalizar Compra</span>
+              <span class="text-xl">→</span>
+            </button>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  import { cartItems, removeItem } from '../store/cartStore';
+
+  const cartList = document.getElementById('cart-list');
+  const totalPrice = document.getElementById('total-price');
+  const subtotalPrice = document.getElementById('subtotal-price');
+  const badge = document.getElementById('items-count-badge');
+
+  cartItems.subscribe(items => {
+    if (!cartList) return;
+
+    if (items.length === 0) {
+      cartList.innerHTML = `
+        <div class="bg-white p-20 rounded-3xl border-2 border-dashed border-stone-200 text-center">
+          <p class="text-6xl mb-4">🧺</p>
+          <p class="italic text-stone-400 text-xl font-serif">Aún no has añadido tesoros de Gredos</p>
+          <a href="/" class="mt-6 inline-block text-[#8B5E3C] font-bold border-b-2 border-[#8B5E3C]">Volver a la tienda</a>
+        </div>`;
+      totalPrice.innerText = '0.00€';
+      subtotalPrice.innerText = '0.00€';
+      badge.innerText = '0';
+      return;
+    }
+
+    let total = 0;
+    badge.innerText = items.length.toString();
+
+    cartList.innerHTML = items.map(item => {
+      total += item.precio * item.cantidad;
+      return `
+        <div class="flex items-center gap-6 p-6 bg-white rounded-3xl border border-stone-100 shadow-sm transition-all hover:shadow-md">
+          <div class="w-24 h-24 bg-stone-50 rounded-2xl overflow-hidden flex-shrink-0">
+            <img src="${item.imagen}" class="w-full h-full object-cover" onerror="this.src='https://placehold.co/200x200?text=Producto'" />
+          </div>
+          <div class="flex-grow">
+            <h4 class="text-xl font-bold text-[#3D2B1F] mb-1">${item.nombre}</h4>
+            <p class="text-[#8B5E3C] font-bold">${item.precio.toFixed(2)}€ / ud.</p>
+          </div>
+          <div class="text-right flex flex-col items-end gap-2">
+             <span class="text-stone-400 text-sm">Cantidad: ${item.cantidad}</span>
+             <p class="font-bold text-lg">${(item.precio * item.cantidad).toFixed(2)}€</p>
+             <button class="btn-eliminar text-xs uppercase tracking-widest font-bold text-red-400 hover:text-red-600 mt-2" data-id="${item.id}">
+               Eliminar
+             </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    totalPrice.innerText = total.toFixed(2) + '€';
+    subtotalPrice.innerText = total.toFixed(2) + '€';
+
+    document.querySelectorAll('.btn-eliminar').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        const id = e.currentTarget.getAttribute('data-id');
+        removeItem(id);
+      });
+    });
+  });
+
+  // El evento del botón pagar se mantiene igual que ya lo tenías
+</script>

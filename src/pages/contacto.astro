@@ -1,0 +1,56 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Contacto | Aires de Gredos">
+  <Navbar />
+  
+  <main class="max-w-[1400px] mx-auto px-6 py-20">
+    <div class="text-center mb-16">
+      <h1 class="text-5xl font-serif font-bold text-[#3D2B1F] mb-4">Estamos en el corazón de Gredos</h1>
+      <p class="text-xl text-stone-600">Ven a visitarnos o escríbenos para cualquier duda sobre tu pedido.</p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16">
+      <div class="bg-[#FDFCF0] p-10 rounded-2xl shadow-sm border border-stone-100">
+        <form class="space-y-6">
+          <div>
+            <label class="block text-sm font-bold text-[#3D2B1F] uppercase mb-2">Nombre</label>
+            <input type="text" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-[#8B5E3C] outline-none" />
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-[#3D2B1F] uppercase mb-2">Email</label>
+            <input type="email" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-[#8B5E3C] outline-none" />
+          </div>
+          <div>
+            <label class="block text-sm font-bold text-[#3D2B1F] uppercase mb-2">Mensaje</label>
+            <textarea rows="5" class="w-full px-4 py-3 rounded-xl border border-stone-200 focus:ring-2 focus:ring-[#8B5E3C] outline-none"></textarea>
+          </div>
+          <button class="w-full bg-[#3D2B1F] text-white py-4 rounded-xl font-bold text-lg hover:bg-[#8B5E3C] transition-all">Enviar Mensaje</button>
+        </form>
+      </div>
+
+      <div class="space-y-8">
+        <div class="h-[400px] bg-stone-200 rounded-2xl overflow-hidden shadow-inner">
+          <div class="w-full h-full flex items-center justify-center bg-stone-300 text-stone-500 italic">
+            [ Espacio para Google Maps - Navarredonda de Gredos ]
+          </div>
+        </div>
+        <div class="grid grid-cols-2 gap-6">
+          <div class="bg-white p-6 rounded-xl border border-stone-100">
+            <h5 class="font-bold text-[#8B5E3C] mb-2">Horario Tienda</h5>
+            <p class="text-stone-600">L-S: 09:00 a 20:00<br>D: Cerrado</p>
+          </div>
+          <div class="bg-white p-6 rounded-xl border border-stone-100">
+            <h5 class="font-bold text-[#8B5E3C] mb-2">Pedidos Online</h5>
+            <p class="text-stone-600">Atención 24h<br>Envío en 24/48h</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</Layout>

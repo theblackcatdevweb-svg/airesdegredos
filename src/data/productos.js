@@ -1,0 +1,61 @@
+export const productos = [
+  // --- PANADERÍA ---
+  { id: 101, nombre: "Hogaza Masa Madre", descripcion: "Corteza crujiente y miga aireada.", precio: 3.50, categoria: "panaderia", priceId: "price_1", destacado: true, imagen: "https://images.unsplash.com/photo-1509440159596-0249088772ff" },
+  { id: 102, nombre: "Pan de Centeno", descripcion: "Integral con semillas de lino.", precio: 4.20, categoria: "panaderia", priceId: "price_2", destacado: false, imagen: "https://images.unsplash.com/photo-1543781358-86d1ff8b6e68" },
+  { id: 103, nombre: "Baguette Rústica", descripcion: "Tradición francesa diaria.", precio: 1.20, categoria: "panaderia", priceId: "price_3", destacado: true, imagen: "https://images.unsplash.com/photo-1517676746-88031d23ce97" },
+  { id: 104, nombre: "Pan de Nueces", descripcion: "Toque dulce y crujiente.", precio: 4.80, categoria: "panaderia", priceId: "price_4", destacado: false, imagen: "https://images.unsplash.com/photo-1587523927623-a1286c99c716" },
+  { id: 105, nombre: "Pan Multicereales", descripcion: "Siete granos seleccionados.", precio: 3.90, categoria: "panaderia", priceId: "price_5", destacado: false, imagen: "https://images.unsplash.com/photo-1585478259715-876acc5be8eb" },
+  { id: 106, nombre: "Pan de Pueblo", descripcion: "Formato grande, 1kg.", precio: 6.00, categoria: "panaderia", priceId: "price_6", destacado: true, imagen: "https://images.unsplash.com/photo-1509489505437-024dc6c97ec3" },
+  { id: 107, nombre: "Pan de Maíz", descripcion: "Amarillo, suave y dulce.", precio: 3.70, categoria: "panaderia", priceId: "price_7", destacado: false, imagen: "https://images.unsplash.com/photo-1589241062272-c0a000072dfa" },
+  { id: 108, nombre: "Chapata Rústica", descripcion: "Mucha miga, poca corteza.", precio: 1.50, categoria: "panaderia", priceId: "price_8", destacado: false, imagen: "https://images.unsplash.com/photo-1557002016-56a94f06877b" },
+  { id: 109, nombre: "Pan de Pipas", descripcion: "Con semillas de girasol tostadas.", precio: 4.50, categoria: "panaderia", priceId: "price_9", destacado: false, imagen: "https://images.unsplash.com/photo-1598583416556-9a25b1f3c307" },
+  { id: 110, nombre: "Brioche Gourmet", descripcion: "Mantequilla y huevo, muy tierno.", precio: 2.80, categoria: "panaderia", priceId: "price_10", destacado: false, imagen: "https://images.unsplash.com/photo-1508737220366-49a7852fcc56" },
+
+  // --- BOLLERÍA ---
+  { id: 201, nombre: "Croissant Mantequilla", descripcion: "Hojaldre 100% artesano.", precio: 1.80, categoria: "bolleria", priceId: "price_11", destacado: true, imagen: "https://images.unsplash.com/photo-1555507036-ab1f4038808a" },
+  { id: 202, nombre: "Napolitana Chocolate", descripcion: "Rellena de chocolate belga.", precio: 2.00, categoria: "bolleria", priceId: "price_12", destacado: false, imagen: "https://images.unsplash.com/photo-1558961363-db29be4ea6d4" },
+  { id: 203, nombre: "Ensaimada", descripcion: "Tradicional con azúcar glas.", precio: 2.50, categoria: "bolleria", priceId: "price_13", destacado: true, imagen: "https://images.unsplash.com/photo-1628045620984-7e50c451368c" },
+  { id: 204, nombre: "Palmerita Hojaldre", descripcion: "Crujiente y acaramelada.", precio: 1.00, categoria: "bolleria", priceId: "price_14", destacado: false, imagen: "https://images.unsplash.com/photo-1582236802148-36a5a9b31d3f" },
+  { id: 205, nombre: "Donut Glaseado", descripcion: "Hecho a mano cada mañana.", precio: 1.50, categoria: "bolleria", priceId: "price_15", destacado: false, imagen: "https://images.unsplash.com/photo-1520108035847-b27b3b754173" },
+  { id: 206, nombre: "Magdalenas Limón", descripcion: "Pack de 4 unidades caseras.", precio: 3.00, categoria: "bolleria", priceId: "price_16", destacado: true, imagen: "https://images.unsplash.com/photo-1589254316973-e3c3b01a7629" },
+  { id: 207, nombre: "Tarta de Manzana", descripcion: "Con manzanas de la región.", precio: 3.80, categoria: "bolleria", priceId: "price_17", destacado: false, imagen: "https://images.unsplash.com/photo-1621693175373-b3c990664972" },
+  { id: 208, nombre: "Pain au Chocolat", descripcion: "Doble barra de chocolate negro.", precio: 2.20, categoria: "bolleria", priceId: "price_18", destacado: false, imagen: "https://images.unsplash.com/photo-1582092591605-65cf8594247e" },
+  { id: 209, nombre: "Roll de Canela", descripcion: "Glaseado de vainilla suave.", precio: 2.70, categoria: "bolleria", priceId: "price_19", destacado: false, imagen: "https://images.unsplash.com/photo-1585640108341-a16491a6245a" },
+  { id: 210, nombre: "Berlina Crema", descripcion: "Relleno abundante de crema.", precio: 1.90, categoria: "bolleria", priceId: "price_20", destacado: false, imagen: "https://images.unsplash.com/photo-1606771032509-0d20d77f88e3" },
+
+  // --- CHARCUTERÍA ---
+  { id: 301, nombre: "Jamón Ibérico Bellota", descripcion: "100g cortado a cuchillo.", precio: 15.00, categoria: "charcuteria", priceId: "price_21", destacado: true, imagen: "https://images.unsplash.com/photo-1600762957771-884803975762" },
+  { id: 302, nombre: "Lomo Embuchado", descripcion: "Ibérico de cebo de campo.", precio: 12.00, categoria: "charcuteria", priceId: "price_22", destacado: false, imagen: "https://images.unsplash.com/photo-1627993074093-fbf22d992f15" },
+  { id: 303, nombre: "Salchichón de Vic", descripcion: "Artesanal, pimienta negra.", precio: 7.50, categoria: "charcuteria", priceId: "price_23", destacado: true, imagen: "https://images.unsplash.com/photo-1628173499427-bc97e2f5d947" },
+  { id: 304, nombre: "Chorizo de León", descripcion: "Picante y ahumado natural.", precio: 6.90, categoria: "charcuteria", priceId: "price_24", destacado: false, imagen: "https://images.unsplash.com/photo-1625938146369-adc83368bda7" },
+  { id: 305, nombre: "Queso Manchego", descripcion: "Curado 12 meses, oveja.", precio: 9.80, categoria: "charcuteria", priceId: "price_25", destacado: true, imagen: "https://images.unsplash.com/photo-1582235619379-91a13e54b005" },
+  { id: 306, nombre: "Fuet Extra", descripcion: "Calidad suprema de Olot.", precio: 4.50, categoria: "charcuteria", priceId: "price_26", destacado: false, imagen: "https://images.unsplash.com/photo-1608198399264-393c9d118e95" },
+  { id: 307, nombre: "Pavo Braseado", descripcion: "99% pechuga, lonchas finas.", precio: 3.20, categoria: "charcuteria", priceId: "price_27", destacado: false, imagen: "https://images.unsplash.com/photo-1505560821564-9058b8720078" },
+  { id: 308, nombre: "Morcilla de Burgos", descripcion: "Arroz y sangre artesanal.", precio: 2.50, categoria: "charcuteria", priceId: "price_28", destacado: false, imagen: "https://images.unsplash.com/photo-1604085792782-8d92f276d7d8" },
+  { id: 309, nombre: "Queso de Cabra", descripcion: "Rulo suave con ceniza.", precio: 8.50, categoria: "charcuteria", priceId: "price_29", destacado: false, imagen: "https://images.unsplash.com/photo-1616851214300-88b9079a4073" },
+  { id: 310, nombre: "Sobrasada Mallorquina", descripcion: "Pimentón de la vera, 200g.", precio: 5.90, categoria: "charcuteria", priceId: "price_30", destacado: false, imagen: "https://images.unsplash.com/photo-1634252606550-9c2f60237721" },
+
+  // --- VINOTECA ---
+  { id: 401, nombre: "Rioja Crianza", descripcion: "Tinto 2020, 12 meses roble.", precio: 9.50, categoria: "vinoteca", priceId: "price_31", destacado: true, imagen: "https://images.unsplash.com/photo-1510812431401-41d2bd2722f3" },
+  { id: 402, nombre: "Ribera del Duero", descripcion: "Tempranillo intenso, 75cl.", precio: 11.20, categoria: "vinoteca", priceId: "price_32", destacado: false, imagen: "https://images.unsplash.com/photo-1506377247377-2a5b3b417ebb" },
+  { id: 403, nombre: "Albariño Rías Baixas", descripcion: "Blanco afrutado y fresco.", precio: 13.00, categoria: "vinoteca", priceId: "price_33", destacado: true, imagen: "https://images.unsplash.com/photo-1549416556-91d6ed0c4fce" },
+  { id: 404, nombre: "Sidra Asturiana", descripcion: "Natural, para escanciar.", precio: 3.80, categoria: "vinoteca", priceId: "price_34", destacado: false, imagen: "https://images.unsplash.com/photo-1620023023062-8e7c126e7a2a" },
+  { id: 405, nombre: "Vermut de Bodega", descripcion: "Macerado con 24 hierbas.", precio: 8.90, categoria: "vinoteca", priceId: "price_35", destacado: true, imagen: "https://images.unsplash.com/photo-1601007804471-a4e9b9c020f9" },
+  { id: 406, nombre: "Cava Brut Nature", descripcion: "Burbuja fina de Sant Sadurní.", precio: 15.50, categoria: "vinoteca", priceId: "price_36", destacado: false, imagen: "https://images.unsplash.com/photo-1629864275062-5b9a45b7e28b" },
+  { id: 407, nombre: "Verdejo Rueda", descripcion: "Notas herbáceas y cítricas.", precio: 7.20, categoria: "vinoteca", priceId: "price_37", destacado: false, imagen: "https://images.unsplash.com/photo-1579895046896-7c304d2e1b10" },
+  { id: 408, nombre: "Ginebra Dry", descripcion: "Destilación tradicional, 70cl.", precio: 28.00, categoria: "vinoteca", priceId: "price_38", destacado: false, imagen: "https://images.unsplash.com/photo-1610410714902-690a5d2a9d6c" },
+  { id: 409, nombre: "Ron Añejo 5 Años", descripcion: "Melaza envejecida en barrica.", precio: 22.00, categoria: "vinoteca", priceId: "price_39", destacado: false, imagen: "https://images.unsplash.com/photo-1605701198592-3c31c4f5a9f9" },
+  { id: 410, nombre: "Cerveza Artesana IPA", descripcion: "Lupulada e intensa, 33cl.", precio: 3.50, categoria: "vinoteca", priceId: "price_40", destacado: false, imagen: "https://images.unsplash.com/photo-1543781358-86d1ff8b6e68" },
+
+  // --- ALIMENTACIÓN ---
+  { id: 501, nombre: "Aceite Oliva VE", descripcion: "Virgen Extra primera prensa.", precio: 9.50, categoria: "alimentacion", priceId: "price_41", destacado: true, imagen: "https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5" },
+  { id: 502, nombre: "Arroz Bomba", descripcion: "Especial para paella valenciana.", precio: 3.20, categoria: "alimentacion", priceId: "price_42", destacado: false, imagen: "https://images.unsplash.com/photo-1606857410077-d6706e251a31" },
+  { id: 503, nombre: "Lentejas Pardinas", descripcion: "Legumbre local de León.", precio: 2.80, categoria: "alimentacion", priceId: "price_43", destacado: false, imagen: "https://images.unsplash.com/photo-1547900888-9d41315b706c" },
+  { id: 504, nombre: "Pasta Penne Rigate", descripcion: "De sémola de trigo duro.", precio: 1.80, categoria: "alimentacion", priceId: "price_44", destacado: false, imagen: "https://images.unsplash.com/photo-1563379927-b223c2805903" },
+  { id: 505, nombre: "Tomate Triturado", descripcion: "Natural, conserva de huerta.", precio: 2.50, categoria: "alimentacion", priceId: "price_45", destacado: true, imagen: "https://images.unsplash.com/photo-1590779033100-9f60705a2f3b" },
+  { id: 506, nombre: "Miel de Romero", descripcion: "Pura, recogida en primavera.", precio: 7.00, categoria: "alimentacion", priceId: "price_46", destacado: false, imagen: "https://images.unsplash.com/photo-1534080922894-3a5530f2c96c" },
+  { id: 507, nombre: "Mermelada Fresa", descripcion: "80% fruta artesanal.", precio: 3.20, categoria: "alimentacion", priceId: "price_47", destacado: false, imagen: "https://images.unsplash.com/photo-1552661806-64190471a53c" },
+  { id: 508, nombre: "Sal de Escamas", descripcion: "Del Mediterráneo, natural.", precio: 1.50, categoria: "alimentacion", priceId: "price_48", destacado: false, imagen: "https://images.unsplash.com/photo-1555507036-ab1f4038808a" },
+  { id: 509, nombre: "Vinagre de Jerez", descripcion: "Reserva añejado en barrica.", precio: 6.00, categoria: "alimentacion", priceId: "price_49", destacado: false, imagen: "https://images.unsplash.com/photo-1627993074093-fbf22d992f15" },
+  { id: 510, nombre: "Chocolate 85%", descripcion: "Tableta artesana premium.", precio: 2.80, categoria: "alimentacion", priceId: "price_50", destacado: false, imagen: "https://images.unsplash.com/photo-1616851214300-88b9079a4073" },
+];

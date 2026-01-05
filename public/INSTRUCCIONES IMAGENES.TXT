@@ -1,0 +1,9 @@
+GUÍA DE IMÁGENES EL COLMADO
+
+Formato recomendado: .jpg o .webp.
+
+Tamaño ideal: Cuadradas (800x800px) para que encajen en el diseño.
+
+Peso: Menos de 200kb por imagen para que la web vuele.
+
+Naming: Usar minúsculas y guiones (ej: jamon-bellota-premium.jpg).

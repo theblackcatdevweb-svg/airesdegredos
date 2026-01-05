@@ -1,0 +1,14 @@
+---
+import ProductCard from "./ProductCard.astro";
+const { titulo, subtitulo, productos } = Astro.props;
+---
+<section class="py-16 px-4 max-w-7xl mx-auto">
+  <div class="text-center mb-12">
+    <h2 class="text-4xl font-serif font-bold text-[#3D2B1F] mb-3">{titulo}</h2>
+    <p class="text-stone-500 max-w-2xl mx-auto italic">{subtitulo}</p>
+  </div>
+  
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+    {productos.map(p => <ProductCard producto={p} />)}
+  </div>
+</section>

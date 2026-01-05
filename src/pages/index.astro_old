@@ -1,0 +1,93 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const productos = [
+  { 
+    id: 1, 
+    nombre: "Café de Especialidad", 
+    precio: 15, 
+    priceId: "price_1SkrJOPIItFNtBsbXFtG2r9x", 
+    imagen: "https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=500&auto=format&fit=crop&q=60"
+  }
+];
+---
+
+<Layout>
+  <div class="flex justify-between items-center">
+    <h1 class="text-3xl font-bold">Tienda de Café</h1>
+    <button id="checkout-btn" class="bg-green-600 text-white px-6 py-2 rounded-lg font-bold hover:bg-green-700 transition-colors">
+      Pagar Carrito (<span id="cart-count">0</span>)
+    </button>
+  </div>
+  
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+    {
+      productos.map((p) => (
+        <div class="border p-4 rounded-xl shadow-sm">
+          <img src={p.imagen} class="w-full h-40 object-cover rounded-lg" />
+          <h2 class="text-xl font-bold mt-2">{p.nombre}</h2>
+          <p class="text-gray-600 font-bold">{p.precio}€</p>
+          
+          {/* El botón ahora está DENTRO del map y usa "p" */}
+          <button 
+            class="add-to-cart bg-black text-white px-4 py-2 mt-2 rounded-lg w-full hover:opacity-80 transition-opacity" 
+            data-price={p.priceId} 
+            data-nombre={p.nombre}
+            data-precio={p.precio}
+          >
+            Añadir al carrito
+          </button>
+        </div>
+      ))
+    }
+  </div>
+</Layout>
+
+<script>
+  import { addCartItem, cartItems } from '../store/cartStore';
+
+  // 1. Lógica para añadir productos
+  const buttons = document.querySelectorAll('.add-to-cart');
+  buttons.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const { price, nombre, precio } = (btn as HTMLElement).dataset;
+      addCartItem({ 
+        priceId: price!, 
+        nombre: nombre!, 
+        precio: Number(precio),
+        cantidad: 1 
+      });
+    });
+  });
+
+  // 2. Actualizar el contador del botón de pago
+  const cartCountElement = document.getElementById('cart-count');
+  cartItems.subscribe(items => {
+    const total = items.reduce((acc, item) => acc + item.cantidad, 0);
+    if (cartCountElement) cartCountElement.innerText = total.toString();
+  });
+
+  // 3. Lógica para enviar TODO el carrito a Stripe
+  const checkoutBtn = document.getElementById('checkout-btn');
+  checkoutBtn?.addEventListener('click', async () => {
+    const items = cartItems.get();
+    
+    if (items.length === 0) {
+      alert("El carrito está vacío");
+      return;
+    }
+
+    const response = await fetch('/api/checkout', {
+      method: 'POST',
+      body: JSON.stringify({ items }),
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    const data = await response.json();
+    if (data.url) {
+      window.location.href = data.url; // Redirigir a Stripe
+    } else {
+      alert("Error al ir al pago");
+    }
+  });
+</script>

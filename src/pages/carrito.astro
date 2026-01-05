@@ -1,0 +1,157 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import Footer from "../components/Footer.astro";
+---
+
+<Layout title="Tu Cesta | Aires de Gredos">
+  <Navbar />
+
+  <main class="max-w-[1000px] mx-auto px-6 py-20 min-h-[70vh]">
+    <div class="flex justify-between items-end mb-12">
+      <h1 class="text-4xl font-serif font-bold text-[#3D2B1F]">Tu Cesta de la Sierra</h1>
+      <button id="clear-cart" class="text-sm text-stone-400 underline hover:text-red-600 transition-colors cursor-pointer">
+        Vaciar cesta
+      </button>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+      <div id="cart-list" class="lg:col-span-2 space-y-6">
+        </div>
+
+      <div class="bg-[#FDFCF0] p-8 rounded-2xl h-fit border border-stone-200 shadow-sm sticky top-32">
+        <h3 class="text-xl font-bold mb-6 italic text-[#3D2B1F]">Resumen</h3>
+        <div class="flex justify-between text-2xl font-bold text-[#3D2B1F] mb-8 pt-4 border-t border-stone-200">
+          <span>Total</span>
+          <span id="total-price">0.00€</span>
+        </div>
+        
+        <button 
+          id="btn-pagar"
+          class="w-full bg-[#3D2B1F] text-white py-4 rounded-xl font-bold text-lg hover:bg-black transition-all shadow-lg cursor-pointer disabled:opacity-50"
+        >
+          Finalizar Compra
+        </button>
+      </div>
+    </div>
+  </main>
+  <Footer />
+</Layout>
+
+<script>
+  import { cartItems, removeItem, incrementQuantity, decrementQuantity } from '../store/cartStore';
+
+  const cartList = document.getElementById('cart-list');
+  const totalPrice = document.getElementById('total-price');
+  const btnPagar = document.getElementById('btn-pagar');
+  const clearBtn = document.getElementById('clear-cart');
+
+  // Función para pintar el carrito
+  function updateUI(items) {
+    if (!cartList) return;
+
+    if (items.length === 0) {
+      cartList.innerHTML = `
+        <div class="text-center py-20 bg-white rounded-3xl border border-dashed border-stone-200">
+          <p class="text-5xl mb-4">🧺</p>
+          <p class="italic text-stone-500 text-lg uppercase tracking-widest">La cesta está vacía</p>
+          <a href="/" class="mt-6 inline-block bg-[#3D2B1F] text-white px-8 py-3 rounded-full font-bold">Ir a la tienda</a>
+        </div>`;
+      if (totalPrice) totalPrice.innerText = '0.00€';
+      if (clearBtn) clearBtn.style.display = 'none';
+      return;
+    }
+
+    if (clearBtn) clearBtn.style.display = 'block';
+    let total = 0;
+
+    cartList.innerHTML = items.map(item => {
+      total += item.precio * item.cantidad;
+      return `
+        <div class="flex flex-col sm:flex-row items-center gap-6 p-6 bg-white rounded-3xl border border-stone-100 shadow-sm transition-all hover:shadow-md">
+          <img src="${item.imagen}" class="w-24 h-24 object-cover rounded-2xl border border-stone-100" onerror="this.src='https://placehold.co/200x200?text=Cargando...'" />
+
+          <div class="flex-grow text-center sm:text-left">
+            <h4 class="text-xl font-bold text-[#3D2B1F] mb-1">${item.nombre}</h4>
+            <p class="text-[#8B5E3C] font-bold text-sm tracking-wider uppercase">${item.precio.toFixed(2)}€ unidad</p>
+          </div>
+
+          <div class="flex items-center gap-4 bg-stone-50 px-4 py-2 rounded-2xl border border-stone-200">
+            <button class="btn-dec font-bold text-xl cursor-pointer" data-id="${item.id}">−</button>
+            <span class="font-bold text-lg w-6 text-center">${item.cantidad}</span>
+            <button class="btn-inc font-bold text-xl cursor-pointer" data-id="${item.id}">+</button>
+          </div>
+
+          <div class="flex flex-col items-end gap-1 min-w-[100px]">
+            <span class="font-bold text-xl text-[#3D2B1F]">${(item.precio * item.cantidad).toFixed(2)}€</span>
+            <button class="btn-del text-xs font-bold text-red-400 hover:text-red-600 uppercase mt-2 cursor-pointer" data-id="${item.id}">
+              🗑 Borrar
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    if (totalPrice) totalPrice.innerText = total.toFixed(2) + '€';
+
+    // Asignar eventos a los botones inyectados
+    document.querySelectorAll('.btn-inc').forEach(btn => {
+      btn.onclick = () => incrementQuantity(btn.dataset.id);
+    });
+    document.querySelectorAll('.btn-dec').forEach(btn => {
+      btn.onclick = () => decrementQuantity(btn.dataset.id);
+    });
+    document.querySelectorAll('.btn-del').forEach(btn => {
+      btn.onclick = () => removeItem(btn.dataset.id);
+    });
+  }
+
+  // Escuchar cambios y carga inicial
+  cartItems.subscribe(items => updateUI(items));
+  updateUI(cartItems.get());
+
+  // Botón Vaciar
+  clearBtn?.addEventListener('click', () => {
+    if(confirm('¿Seguro que quieres vaciar toda la cesta?')) {
+        cartItems.set([]);
+    }
+  });
+
+  // Botón Pagar (Stripe) - Versión Corregida
+  btnPagar?.addEventListener('click', async () => {
+    const items = cartItems.get();
+    if (items.length === 0) return;
+
+    btnPagar.innerText = "Conectando...";
+    btnPagar.disabled = true;
+
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        body: JSON.stringify({ items }),
+        headers: { 'Content-Type': 'application/json' }
+      });
+
+      // Si la respuesta no es 200, leemos el error
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Error desconocido en el servidor');
+      }
+
+      const data = await response.json();
+      
+      // Verificamos si existe la URL antes de intentar navegar
+      if (data && data.url) {
+        window.location.href = data.url;
+      } else {
+        throw new Error("No se recibió la URL de pago de Stripe");
+      }
+
+    } catch (error) {
+      console.error("Detalle del error:", error);
+      alert("Error: " + error.message); // Aquí verás por qué Stripe falla realmente
+      btnPagar.innerText = "Finalizar Compra";
+      btnPagar.disabled = false;
+    }
+  });
+</script>

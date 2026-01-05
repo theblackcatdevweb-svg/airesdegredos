@@ -1,0 +1,33 @@
+---
+import { SignedIn, SignedOut, UserButton, SignInButton } from '@clerk/astro/components';
+---
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Aires de Gredos | Sabores de la Sierra</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  </head>
+  
+  <body class="bg-[#FDFCF0] text-gray-900 overflow-x-hidden">
+    <div class="fixed top-4 right-4 z-[100]">
+       <SignedOut>
+         <SignInButton mode="modal" class="text-xs bg-[#3D2B1F] text-white px-3 py-1 rounded-full opacity-50 hover:opacity-100 transition" />
+       </SignedOut>
+       <SignedIn>
+         <UserButton afterSignOutUrl="/" />
+       </SignedIn>
+    </div>
+
+    <main class="w-full">
+      <slot />
+    </main>
+
+    <footer class="bg-[#3D2B1F] text-[#FDFCF0] py-12 mt-20 text-center">
+      <p class="font-serif">© 2026 Aires de Gredos - Productos Artesanos</p>
+    </footer>
+    <script is:inline src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+  </body>
+
+</html>
