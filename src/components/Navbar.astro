@@ -16,13 +16,25 @@ import { SignedIn, SignedOut, UserButton, SignInButton } from '@clerk/astro/comp
       </a>
     </div>
 
-    <div class="flex items-center gap-3">
+    <div class="flex items-center gap-2 md:gap-4">
       
+      <a 
+        href="https://wa.me/34618252806" 
+        target="_blank" 
+        rel="noopener noreferrer"
+        class="bg-[#25D366] text-white p-2 rounded-full hover:bg-[#128C7E] transition-all hover:scale-110 shadow-sm flex items-center justify-center"
+        title="Contactar por WhatsApp"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="md:w-6 md:h-6">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+        </svg>
+      </a>
+
       <div class="flex items-center">
         <SignedOut>
           <SignInButton 
             mode="modal" 
-            class="bg-stone-800 text-white text-[11px] font-bold uppercase tracking-widest px-5 py-2.5 rounded-full shadow-sm cursor-pointer border-none hover:bg-stone-700 transition-all"
+            class="bg-stone-800 text-white text-[10px] md:text-[11px] font-bold uppercase tracking-widest px-3 md:px-5 py-2.5 rounded-full shadow-sm cursor-pointer border-none hover:bg-stone-700 transition-all"
           >
             Entrar
           </SignInButton>
@@ -54,9 +66,6 @@ import { SignedIn, SignedOut, UserButton, SignInButton } from '@clerk/astro/comp
 </header>
 
 <style is:global>
-  /* Mantenemos este CSS para ocultar el botón gris fijo que vimos en tu captura.
-     Esto asegura que el ÚNICO botón visible sea el que está dentro del Navbar.
-  */
   div.fixed.top-4.right-4.z-\[100\],
   button[data-clerk-unstyled-id]:not(.bg-stone-800) {
     display: none !important;
