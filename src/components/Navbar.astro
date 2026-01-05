@@ -1,64 +1,72 @@
 ---
-// Si quieres puedes importar el store aquí si necesitas lógica de servidor, 
-// pero para el contador lo haremos en el cliente.
+// src/components/Navbar.astro
+import { SignedIn, SignedOut, UserButton, SignInButton } from '@clerk/astro/components';
 ---
 
-<nav class="bg-[#FDFCF0] border-b border-stone-200 sticky top-0 z-50 py-2"> 
-  <div class="max-w-[1400px] mx-auto px-8"> 
-    <div class="flex justify-between items-center h-28"> 
-      
-      <a href="/" class="flex items-center gap-5 group">
-        <div class="relative">
-           <img 
-            src="/images/productos/ui/logo_aires_gredos.jpg" 
-            alt="Logo Aires de Gredos" 
-            class="h-20 w-auto rounded-xl shadow-md transition-transform group-hover:scale-105"
-          />
-        </div>
-        
-        <div class="hidden xl:flex flex-col">
-          <span class="text-3xl font-serif font-bold text-[#3D2B1F] tracking-tight leading-none">
-            Aires de Gredos
-          </span>
-          <span class="text-sm uppercase tracking-[0.4em] text-[#8B5E3C] mt-2 font-medium">
-            Sabores de la Sierra
-          </span>
-        </div>
+<header class="bg-white border-b border-stone-100 shadow-sm">
+  <div class="flex justify-between items-center p-4 max-w-7xl mx-auto w-full h-16 md:h-20">
+    
+    <div class="flex-shrink-0">
+      <a href="/" class="flex items-center">
+        <img src="/images/logo.png" alt="Aires de Gredos" class="h-8 md:h-12 w-auto" onerror="this.src='/favicon.svg'"/>
       </a>
+    </div>
+
+    <div class="flex items-center space-x-4">
       
-      <div class="hidden lg:flex items-center space-x-12 text-lg font-semibold text-stone-800">
-        <a href="/categoria/panaderia" class="hover:text-[#8B5E3C] transition-all hover:-translate-y-0.5">Panadería</a>
-        <a href="/categoria/bolleria" class="hover:text-[#8B5E3C] transition-all hover:-translate-y-0.5">Bollería</a>
-        <a href="/categoria/charcuteria" class="hover:text-[#8B5E3C] transition-all hover:-translate-y-0.5">Charcutería</a>
-        <a href="/categoria/vinoteca" class="hover:text-[#8B5E3C] transition-all hover:-translate-y-0.5">Vinoteca</a>
-        <a href="/categoria/alimentacion" class="hover:text-[#8B5E3C] transition-all hover:-translate-y-0.5">Alimentación</a>
+      <div class="flex items-center">
+        <SignedOut>
+          <SignInButton mode="modal">
+            <button class="text-xs md:text-sm font-semibold text-stone-600 bg-stone-50 px-3 py-1.5 rounded-full border border-stone-200 hover:bg-white transition-all">
+              Entrar
+            </button>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <UserButton afterSignOutUrl="/" />
+        </SignedIn>
       </div>
 
-      <div class="flex items-center gap-6">
-        <a href="/carrito" id="checkout-btn" class="bg-[#3D2B1F] text-white px-7 py-4 rounded-full text-base font-bold flex items-center gap-3 hover:bg-[#5D3A24] transition-all shadow-lg active:scale-95">
-          <span class="text-xl">🛒</span>
-          <span id="cart-count" class="bg-[#8B5E3C] px-2 rounded-md min-w-[1.5rem] text-center">0</span>
-        </a>
-      </div>
-
+      <a href="/carrito" class="relative group p-2 bg-[#5c4033] text-white rounded-full hover:scale-105 transition-transform">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span id="cart-count" class="absolute -top-1 -right-1 bg-amber-500 text-white text-[10px] font-bold rounded-full h-5 w-5 flex items-center justify-center border-2 border-white shadow-sm">
+          0
+        </span>
+      </a>
     </div>
   </div>
-</nav>
+
+  <nav class="bg-stone-50/50 overflow-hidden border-t border-stone-100">
+    <div class="flex overflow-x-auto py-3 px-4 gap-8 no-scrollbar md:justify-center">
+      {['panaderia', 'bolleria', 'charcuteria', 'vinoteca', 'alimentacion'].map((cat) => (
+        <a href={`/categoria/${cat}`} class="text-[11px] font-bold text-stone-500 hover:text-[#5c4033] transition-colors whitespace-nowrap uppercase tracking-widest">
+          {cat}
+        </a>
+      ))}
+    </div>
+  </nav>
+</header>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  #cart-count { transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+</style>
 
 <script>
   import { cartItems } from '../store/cartStore';
-
   const counter = document.getElementById('cart-count');
 
-  // Nos suscribimos a los cambios del store
   cartItems.subscribe(items => {
-    const total = items.reduce((acc, item) => acc + item.cantidad, 0);
+    const total = items.reduce((acc, item) => acc + (item.cantidad || 0), 0);
     if (counter) {
       counter.innerText = total.toString();
-      
-      // Opcional: animar el contador cuando cambie
-      counter.classList.add('scale-110');
-      setTimeout(() => counter.classList.remove('scale-110'), 100);
+      counter.style.transform = 'scale(1.4)';
+      setTimeout(() => { counter.style.transform = 'scale(1)'; }, 200);
     }
   });
 </script>
